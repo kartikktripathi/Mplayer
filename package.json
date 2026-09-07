@@ -1,0 +1,23 @@
+{
+  "name": "mplayer",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/kartikktripathi/Mplayer#readme",
+  "bugs": {
+    "url": "https://github.com/kartikktripathi/Mplayer/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kartikktripathi/Mplayer.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "player.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "prettier": "^3.9.6"
+  }
+}
