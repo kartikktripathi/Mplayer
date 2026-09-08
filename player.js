@@ -19,7 +19,7 @@ process.stdin.on("data", (input) => {
 
   // For when the user wants to move up in the list.
   if(input[2] === 'A'){
-    if(selected === 0) return;
+    if(selected === 1) return;
     selected--;
     process.stdout.write(`\x1b[${songs.length}A`)
     showSongs();
@@ -39,7 +39,7 @@ function showSongs() {
   for (let i = 0; i < songs.length; i++) {
     // Clear line
     if (selected === i + 1) {
-      console.log(`->${i + 1}: ${songs[i]}`);
+      console.log(`→ ${i + 1}: ${songs[i]}`);
     } else {
       console.log(`  ${i + 1}: ${songs[i]}`);
     }
