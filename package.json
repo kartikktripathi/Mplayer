@@ -19,5 +19,10 @@
   },
   "dependencies": {
     "prettier": "^3.9.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.10.0",
+    "globals": "^17.12.0"
   }
 }
