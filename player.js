@@ -8,6 +8,16 @@ const songs = fs
 let selected = 1;
 showSongs();
 
+process.stdin.setEncoding("utf-8");
+process.stdin.setRawMode(true);
+
+process.stdin.on("data", (input) => {
+  if (input === "q") {
+    process.stdin.setRawMode(false);
+    process.exit(0);
+  }
+});
+
 function showSongs() {
   process.stdout.write("\x1b[2K");
   for (let i = 0; i < songs.length; i++) {
