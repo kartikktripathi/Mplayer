@@ -3,7 +3,7 @@ const path = require("path");
 
 const songs = fs
   .readdirSync(path.join(__dirname, "Songs"))
-  .filter((file) => !file.endsWith(".jpeg"));
+  .filter((file) => file.endsWith(".mp3"));
 
 let selected = 1;
 showSongs();
@@ -13,6 +13,7 @@ process.stdin.setRawMode(true);
 
 process.stdin.on("data", (input) => {
   if (input === "q") {
+    console.log("Thanks for using Mplayer!")
     process.stdin.setRawMode(false);
     process.exit(0);
   }
@@ -29,7 +30,7 @@ process.stdin.on("data", (input) => {
   if (input[2] === "B") {
     if (selected === songs.length) return;
     selected++;
-    process.stdout.write(`\x1b[${songs.length}B`);
+    process.stdout.write(`\x1b[${songs.length}A`);
     showSongs();
   }
 });
