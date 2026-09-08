@@ -18,18 +18,18 @@ process.stdin.on("data", (input) => {
   }
 
   // For when the user wants to move up in the list.
-  if(input[2] === 'A'){
-    if(selected === 1) return;
+  if (input[2] === "A") {
+    if (selected === 1) return;
     selected--;
-    process.stdout.write(`\x1b[${songs.length}A`)
+    process.stdout.write(`\x1b[${songs.length}A`);
     showSongs();
   }
 
   // For when the user wants to move down in the list.
-  if(input[2] === 'B'){
-    if(selected === songs.length) return;
+  if (input[2] === "B") {
+    if (selected === songs.length) return;
     selected++;
-    process.stdout.write(`\x1b[${songs.length}B`)
+    process.stdout.write(`\x1b[${songs.length}B`);
     showSongs();
   }
 });
