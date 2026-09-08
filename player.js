@@ -16,6 +16,14 @@ process.stdin.on("data", (input) => {
     process.stdin.setRawMode(false);
     process.exit(0);
   }
+
+  // For when the user wants to move down in the list.
+  if(input[2] === 'B'){
+    if(selected === songs.length) return;
+    selected++;
+    process.stdout.write(`\x1b[${songs.length}B`)
+    showSongs();
+  }
 });
 
 function showSongs() {
