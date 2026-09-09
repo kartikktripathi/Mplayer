@@ -63,7 +63,7 @@ function showSongs() {
 
 function playSong() {
   if (player) {
-      player.kill();
+    player.kill();
   }
   const songPath = path.join(__dirname, "Songs", songs[selected - 1]);
   player = spawn("afplay", [songPath]);
@@ -71,11 +71,11 @@ function playSong() {
 }
 
 function togglePause() {
-    if (isPaused) {
-        player.kill("SIGCONT");
-        isPaused = false;
-    } else {
-        player.kill("SIGSTOP");
-        isPaused = true;
-    }
+  if (isPaused) {
+    player.kill("SIGCONT");
+    isPaused = false;
+  } else {
+    player.kill("SIGSTOP");
+    isPaused = true;
+  }
 }
