@@ -5,7 +5,7 @@ export default [
   {
     // This tells ESLint to apply these rules to JavaScript files only.
     files: ["**/*.js"],
-    
+
     // Here, we are adding Node.js global variables.
     languageOptions: {
       globals: {
