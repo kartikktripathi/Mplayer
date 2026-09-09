@@ -7,8 +7,10 @@ const songs = fs
   .filter((file) => file.endsWith(".mp3"));
 
 let selected = 1;
-showSongs();
 let player = null;
+let isPaused = false;
+
+showSongs();
 
 process.stdin.setEncoding("utf-8");
 process.stdin.setRawMode(true);
@@ -53,6 +55,10 @@ function showSongs() {
 }
 
 function playSong() {
+  if (player) {
+      player.kill();
+  }
   const songPath = path.join(__dirname, "Songs", songs[selected - 1]);
   player = spawn("afplay", [songPath]);
+  isPaused = false;
 }
