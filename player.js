@@ -28,6 +28,9 @@ process.stdin.on("data", (input) => {
 
   // Quits the player then and there.
   if (input === "q") {
+    if (player) {
+      player.kill();
+    }
     console.log("Thanks for using Mplayer!");
     process.stdin.setRawMode(false);
     process.exit(0);
