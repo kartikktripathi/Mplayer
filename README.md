@@ -49,18 +49,18 @@ Mplayer is built around three core Node.js engineering paradigms:
 
 Standard terminal input operates in **canonical mode** (line-buffered mode), meaning keystrokes are buffered until the user presses `Enter`. To create a responsive CLI:
 
-* **Raw Mode (`process.stdin.setRawMode(true)`)**: 
+- **Raw Mode (`process.stdin.setRawMode(true)`)**:
   Switches the input stream to raw mode, delivering keystrokes byte-by-byte in real time.
-* **Character Encoding (`process.stdin.setEncoding("utf-8")`)**:
+- **Character Encoding (`process.stdin.setEncoding("utf-8")`)**:
   Ensures raw incoming binary buffers are decoded into standard strings.
-* **ANSI Escape Codes**:
+- **ANSI Escape Codes**:
   - `\x1b[2K`: Clears the current terminal line.
   - `\x1b[<N>A`: Moves the cursor up by `N` lines (e.g., `\x1b[${songs.length}A`). This allows Mplayer to redraw the list in place whenever selection changes.
-* **Escape Sequence Parsing**:
+- **Escape Sequence Parsing**:
   Special keys like arrow keys emit multi-byte ANSI sequences:
   - Up Arrow: `\x1b[A` (detected via `input[2] === "A"`)
   - Down Arrow: `\x1b[B` (detected via `input[2] === "B"`)
-* **Terminal State Restoration**:
+- **Terminal State Restoration**:
   Before exiting, raw mode is deactivated (`process.stdin.setRawMode(false)`) so the user's terminal environment returns to its default state.
 
 ```javascript
@@ -87,11 +87,11 @@ process.stdin.on("data", (input) => {
 
 Mplayer dynamically scans the local file system for audio files on startup:
 
-* **Directory Resolution (`path.join(__dirname, "Songs")`)**:
+- **Directory Resolution (`path.join(__dirname, "Songs")`)**:
   Combines the module path with target folders in a platform-agnostic manner.
-* **Synchronous Directory Reading (`fs.readdirSync`)**:
+- **Synchronous Directory Reading (`fs.readdirSync`)**:
   Reads the directory contents to populate the playlist before attaching event listeners.
-* **File Filtering (`.filter(file => file.endsWith(".mp3"))`)**:
+- **File Filtering (`.filter(file => file.endsWith(".mp3"))`)**:
   Isolates valid audio files and ignores non-audio files (such as images, hidden files, or metadata files).
 
 ```javascript
@@ -106,20 +106,20 @@ const songs = fs
 
 Audio decoding and output is delegated to an external system process:
 
-* **Process Spawning (`child_process.spawn`)**:
+- **Process Spawning (`child_process.spawn`)**:
   `afplay` (macOS native audio tool) is spawned asynchronously with the path to the selected track:
   ```javascript
   player = spawn("afplay", [songPath]);
   ```
-* **Process Replacement & Clean Up**:
+- **Process Replacement & Clean Up**:
   When a new song is selected, the currently running child process is terminated via `player.kill()` before launching the next one.
-* **Pausing with `SIGSTOP`**:
+- **Pausing with `SIGSTOP`**:
   Instead of killing the process to pause, Mplayer sends the POSIX signal `SIGSTOP`:
   ```javascript
   player.kill("SIGSTOP");
   ```
   This tells the operating system kernel to freeze execution of `afplay`. The audio stream halts, while the process memory and playback buffer remain intact.
-* **Resuming with `SIGCONT`**:
+- **Resuming with `SIGCONT`**:
   When unpausing, Mplayer sends `SIGCONT`:
   ```javascript
   player.kill("SIGCONT");
@@ -132,13 +132,14 @@ Audio decoding and output is delegated to an external system process:
 
 - **Node.js**: Version 16.0 or higher.
 - **Operating System**: macOS (comes preinstalled with `afplay`).
-  > *Note for Linux users: `afplay` is macOS-specific. On Linux systems, `afplay` can be substituted with `mpg123` or `aplay`.*
+  > _Note for Linux users: `afplay` is macOS-specific. On Linux systems, `afplay` can be substituted with `mpg123` or `aplay`._
 
 ---
 
 ## 🚀 Installation & Setup
 
 1. **Clone the repository**:
+
    ```bash
    git clone https://github.com/kartikktripathi/Mplayer.git
    cd Mplayer
@@ -146,12 +147,14 @@ Audio decoding and output is delegated to an external system process:
 
 2. **Add audio files**:
    Ensure you have `.mp3` files placed inside the `songs/` (or `Songs/`) folder:
+
    ```bash
    ls songs/
    # Example output: track1.mp3 track2.mp3
    ```
 
 3. **Install dev dependencies (optional)**:
+
    ```bash
    npm install
    ```
@@ -167,13 +170,13 @@ Audio decoding and output is delegated to an external system process:
 
 Once launched, use the following keyboard controls:
 
-| Key | Action | Description |
-| :--- | :--- | :--- |
-| **`↑` (Up Arrow)** | **Move Up** | Moves the selection cursor up the track list |
-| **`↓` (Down Arrow)** | **Move Down** | Moves the selection cursor down the track list |
-| **`Enter` (`Return`)** | **Play Song** | Plays the currently highlighted track |
-| **`Spacebar`** | **Pause / Resume** | Toggles playback pause via `SIGSTOP` / `SIGCONT` |
-| **`q`** | **Quit** | Restores terminal mode and exits Mplayer cleanly |
+| Key                    | Action             | Description                                      |
+| :--------------------- | :----------------- | :----------------------------------------------- |
+| **`↑` (Up Arrow)**     | **Move Up**        | Moves the selection cursor up the track list     |
+| **`↓` (Down Arrow)**   | **Move Down**      | Moves the selection cursor down the track list   |
+| **`Enter` (`Return`)** | **Play Song**      | Plays the currently highlighted track            |
+| **`Spacebar`**         | **Pause / Resume** | Toggles playback pause via `SIGSTOP` / `SIGCONT` |
+| **`q`**                | **Quit**           | Restores terminal mode and exits Mplayer cleanly |
 
 ---
 
